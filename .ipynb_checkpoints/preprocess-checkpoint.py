@@ -2,7 +2,6 @@ import os
 import numpy as np
 import math
 from scipy.io import wavfile
-from vad_utils import read_label_from_file, prediction_to_vad_label
 
 # 分帧处理函数
 def enframe(path, frame_size: float=0.032, frame_shift: float=0.008):
@@ -40,7 +39,7 @@ def readDataset(dirPath, frame_size: float=0.032, frame_shift: float=0.008):
     '''Read whole data in certain dir
     
     Return:
-        dataset: (dictinary) a mapping from a wave ID to its **frameData**
+        dataset: (dictinary) a mapping from a wave ID to its frameData
             e.g. {
                  "1031-133220-0062": [[0, 0, ...], 
                                       [0, 0, ...],
@@ -58,28 +57,6 @@ def readDataset(dirPath, frame_size: float=0.032, frame_shift: float=0.008):
         dataset[wavID] = enframe(dirPath + '/' + filePath, frame_size, frame_shift)
     return dataset
 
-def makeDataset(dataPath, labelPath, 
-                frame_size: float=0.032, frame_shift: float=0.008): 
-    '''Create Dataset with features aligned with labels
-
-    Return:
-        datalist: (list) frames in each wavefile
-        labelist: (list) labels in each wavefile and been padded 
-    two outputs are aligned respectively with their ID
-    '''
-    wavedata = readDataset(dataPath, frame_size, frame_shift)
-    wavelabel = read_label_from_file(labelPath, frame_size, frame_shift)
-    datalist = []
-    labelist = []
-    for waveID in wavedata.keys():
-        datalist.append(wavedata[waveID])
-        frameLen = datalist[-1].shape[1]
-        label = wavelabel[waveID]
-        labelPad = np.pad(label, (0, np.maximum(frameLen - len(label), 0)))[:frameLen]
-        labelist.append(labelPad)
-        #if len(labelist) == 2 : print(waveID)
-    return datalist, labelist 
-
 ###################
 ###minimal test####
 ###################
@@ -95,11 +72,8 @@ def getWaveSample():
 
     
 if __name__ == "__main__":
-    #frameData = getFrameSample()
-    #print( frameData.shape, '\n', frameData)
+    frameData = getFrameSample()
+    print( frameData.shape, '\n', frameData)
 
-    #print( dataset['54-121080-0009'] )
-    data, label = makeDataset("data/dev", "data/dev_label.txt")
-    print("data[1]'s frame length ", data[1].shape)
-    print("label[1]'s frame length: ", label[1].shape)
-    print(prediction_to_vad_label(label[1]))
+    dataset = readDataset("data/dev")
+    print( dataset['54-121080-0009'] )

@@ -141,3 +141,9 @@ def read_label_from_file(
                 raise RuntimeError(f"{k} is duplicated ({path}:{linenum})")
             data[k] = parse_vad_label(v, frame_size=frame_size, frame_shift=frame_shift)
     return data
+
+
+if __name__ == "__main__":
+    data = read_label_from_file()
+    print(data['834-130871-0052'])
+    print("afer use the func \n", prediction_to_vad_label(data['834-130871-0052']))
