@@ -81,6 +81,33 @@ def makeDataset(dataPath, labelPath,
     return datalist, labelist 
 
 
+def aggregateFeature(frameData):
+    zcr = tfe.ZCR(frameData)
+    ener = tfe.energy(frameData)
+    features = np.stack((zcr,ener))
+    return features
+    
+def makeTrainData( trainPath, labelPath, frame_size: float=0.032, frame_shift: float=0.008):
+    dirPath = '../tmpData'
+    if os.path.exists(dirPath +'/trainX.npy'):
+        trainX = np.load(dirPath + '/trainX.npy')
+        trainY = np.load(dirPath + '/trainY.npy')
+        return trainX, trainY
+
+    datalist, labelist = makeDataset(trainPath, labelPath, frame_size, frame_shift)
+    trainX = np.array([[0],[0]])
+    for x in datalist:
+        trainX = np.concatenate((trainX,aggregateFeature(x)), axis=1)
+    trainY = np.concatenate(labelist)
+
+    # for the sake of running time, we save it 
+    if not os.path.exists('../tmpData'):
+        os.makedirs('../tmpData') 
+    np.save("../tmpData/trainX.npy", trainX)
+    np.save("../tmpData/trainY.npy", trainY)
+    return trainX[:,1:], trainY 
+
+             
 ###################
 ###minimal test####
 ###################
@@ -93,6 +120,14 @@ def getWaveSample():
     pth = "data/dev/54-121080-0009.wav"
     sample_rate, wavData = wavfile.read(pth)
     return sample_rate, wavData
+
+############################
+#####FUNCTION FOR TEST######
+############################
+def testfeatures():
+    sample = getFrameSample()
+    feat = aggregateFeature(sample)
+    print( feat.shape, '\n', feat)
 
     
 if __name__ == "__main__":

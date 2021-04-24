@@ -5,7 +5,6 @@ import librosa
 def ZCR(frameData):
     frameNum = frameData.shape[1]
     frameSize = frameData.shape[0]
-    zcr = np.zeros((frameNum,1))
     '''
     for i in range(frameNum):
         singleFrame = frameData[:,i]
@@ -14,8 +13,6 @@ def ZCR(frameData):
         zcr[i] = np.sum(temp<0)
     '''
     tmp = frameData[:frameSize-1] * frameData[1:frameSize]
-    print(tmp.shape)
-    print(tmp)
     zcr = np.sum(tmp<0, axis=0)
     return zcr
 

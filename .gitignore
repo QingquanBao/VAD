@@ -1,3 +1,5 @@
 # the data provided is supposed to be private
 data/
 tmpData/
+__pycache__/
+gridsearch/
