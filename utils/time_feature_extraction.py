@@ -1,5 +1,4 @@
 import numpy as np
-from preprocess import getFrameSample
 import librosa
 
 def ZCR(frameData):
@@ -30,6 +29,7 @@ if __name__ == "__main__":
     print(rosaZCR.shape)
     print(rosaZCR)
     '''
+    from utils.preprocess import getFrameSample
     testdata = np.array( [[1, 2 ,3],
                           [2, 3, -1],
                           [3,-1, 2],

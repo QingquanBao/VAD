@@ -2,7 +2,8 @@ import os
 import numpy as np
 import math
 from scipy.io import wavfile
-from vad_utils import read_label_from_file, prediction_to_vad_label
+from .vad_utils import read_label_from_file, prediction_to_vad_label
+from . import time_feature_extraction as tfe
 
 # 分帧处理函数
 def enframe(path, frame_size: float=0.032, frame_shift: float=0.008):
@@ -88,12 +89,13 @@ def aggregateFeature(frameData):
     return features
     
 def makeTrainData( trainPath, labelPath, frame_size: float=0.032, frame_shift: float=0.008):
-    dirPath = '../tmpData'
+    dirPath = 'tmpData'
     if os.path.exists(dirPath +'/trainX.npy'):
         trainX = np.load(dirPath + '/trainX.npy')
         trainY = np.load(dirPath + '/trainY.npy')
         return trainX, trainY
 
+    assert 0, 'not use the file'
     datalist, labelist = makeDataset(trainPath, labelPath, frame_size, frame_shift)
     trainX = np.array([[0],[0]])
     for x in datalist:
@@ -103,8 +105,8 @@ def makeTrainData( trainPath, labelPath, frame_size: float=0.032, frame_shift: f
     # for the sake of running time, we save it 
     if not os.path.exists('../tmpData'):
         os.makedirs('../tmpData') 
-    np.save("../tmpData/trainX.npy", trainX)
-    np.save("../tmpData/trainY.npy", trainY)
+    np.save("tmpData/trainX.npy", trainX)
+    np.save("tmpData/trainY.npy", trainY)
     return trainX[:,1:], trainY 
 
              

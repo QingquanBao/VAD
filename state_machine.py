@@ -1,7 +1,7 @@
 import numpy as np
 import time
-from naive_vad import makeTrainData
-from evaluate import get_metrics
+from utils.preprocess import makeTrainData
+from utils.evaluate import get_metrics
 
 def stateMachine(feats, lowerTh, upperTh):
     ''' Based on two threshold
@@ -45,14 +45,14 @@ if __name__ == '__main__':
     endTime = time.time()
     #print('complete, it takes {:.2f}s'.format(startTime-endTime))
     
-    zcrLowerSearchRange = [np.percentile(trainX[0,:], i) for i in range(55,80,5)]
-    enrLowerSearchRange = [np.percentile(trainX[1,:], i) for i in range(25,35,3)]
-    zcrUpperSearchRange = [np.percentile(trainX[0,:], i) for i in range(35,45,5)]
-    enrUpperSearchRange = [np.percentile(trainX[1,:], i) for i in range(48,58,3)]
+    zcrLowerSearchRange = [np.percentile(trainX[0,:], i) for i in range(93,96,2)]
+    enrLowerSearchRange = [np.percentile(trainX[1,:], i) for i in range(22,26,4)]
+    zcrUpperSearchRange = [np.percentile(trainX[0,:], i) for i in range(26,34,2)]
+    enrUpperSearchRange = [np.percentile(trainX[1,:], i) for i in range(40,45,2)]
 
     searchSize = (len(zcrLowerSearchRange), len(zcrUpperSearchRange), len(enrLowerSearchRange), len(enrUpperSearchRange))
 
-    print('check the search range', zcrLowerSearchRange, zcrUpperSearchRange, '\n ener', enrLowerSearchRange, enrUpperSearchRange)
+    print('check the search range\n', zcrLowerSearchRange, zcrUpperSearchRange, '\n ener', enrLowerSearchRange, enrUpperSearchRange)
 
     AUC = np.zeros(searchSize)
     EER = np.ones(searchSize)
@@ -67,8 +67,8 @@ if __name__ == '__main__':
         startTime = time.time()
         print('zl = {}, it takes {}s'.format(zl, startTime-endTime))
 
-    np.save('AUCsearch6.npy', AUC)
-    np.save('EERsearch6.npy', EER)
+    np.save('gridsearch/AUCsearch7.npy', AUC)
+    np.save('gridsearch/EERsearch7.npy', EER)
                      
     print("auc: {}".format(np.amax(AUC)), "eer: {}".format(np.amin(EER)))
     print("in {}".format(np.unravel_index(np.argmax(AUC, axis=None), AUC.shape)), 'in {}'.format(np.unravel_index(np.argmin(EER, axis=None), EER.shape))) 

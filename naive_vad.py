@@ -8,43 +8,33 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
 from utils.evaluate import get_metrics
 import utils.preprocess as pps
 import utils.time_feature_extraction as tfe
+from state_machine import stateMachine
+from utils.smoothing import averageSmooth
 
 
-
-#from state_machine import stateMachine
 if __name__ == "__main__":
+    print('LDA + Smooth + LR :')
     lda = LDA()
     classifier = LogiReg()
     # train 
-    startTime = time.time()
-    #print('collecting data...')
-    trainX, trainY = pps.makeTrainData(trainPath='data/dev', labelPath='data/dev_label.txt', frame_size=0.032, frame_shift=0.008)
-    trainX = trainX[:,1:].T
-    endTime = time.time()
-    #print('complete, it takes {:.2f}s'.format(startTime-endTime))
-    #print('start training')
-    startTime = time.time()
-    trainX_lda = lda.fit_transform(trainX, trainY)
-    classifier.fit(trainX_lda, trainY)
-    #print("training completed with {:.2f}s,\n the coeffs are ".format(endTime-startTime), classifier.coef_)
+    trainXX, trainY = pps.makeTrainData(trainPath='data/dev', labelPath='data/dev_label.txt', frame_size=0.032, frame_shift=0.008)
+    trainXX = trainXX[:,1:]
+    trainX = np.copy(trainXX.T)
+    for winLen in [24,28,32,36,40,60]:
+        for i in [0,1]:
+            trainX[:,i] = averageSmooth(trainXX[i,:], winLen)
+     
+        trainX_lda = lda.fit_transform(trainX, trainY)
+        #classifier.fit(trainX_lda, trainY)
+        #print("training completed with {:.2f}s,\n the coeffs are ".format(endTime-startTime), classifier.coef_)
 
-    # test with the training data
-    #testY = classifier.predict(trainX_lda)
-    testY = lda.predict(trainX)
-    #print('testY shape: ', testY.shape[0])
-    print('with less {}: '.format(0.7), (testY<0.7).sum())
-    print('with more 0.85: ', (testY>=0.85).sum())
-    auc, eer = get_metrics(testY, trainY) 
-    print("auc: {}".format(auc), "eer: {}".format(eer))
-
-
-    # give some baselines
-    allTrueY = np.ones_like(trainY)
-    auc1, eer1 = get_metrics(allTrueY, trainY)
-    #print('baseline1 (All True): \n',"auc: {}".format(auc1), "eer: {}".format(eer1))
-    allFalseY= np.zeros_like(trainY)
-    auc2, eer2 = get_metrics(allFalseY, trainY)
-    #print('baseline2 (All False): \n',"auc: {}".format(auc2), "eer: {}".format(eer2))
+        # test with the training data
+        testY = lda.predict(trainX)
+        #testY = classifier.predict(trainX_lda)
+        #print('with less {}: '.format(0.7), (testY<0.7).sum())
+        #print('with more 0.85: ', (testY>=0.85).sum())
+        auc, eer = get_metrics(testY, trainY) 
+        print('with windowlen = {}'.format(winLen),"auc: {}".format(auc), "eer: {}".format(eer))
 
 
     '''
