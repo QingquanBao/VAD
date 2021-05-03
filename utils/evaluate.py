@@ -1,4 +1,5 @@
 from sklearn import metrics
+import numpy as np
 
 
 def compute_eer(target_scores, nontarget_scores):
@@ -62,6 +63,14 @@ def get_metrics(prediction, label):
     )
     return auc, eer
 
+def ACC(pred, truth):
+    return np.sum(pred == truth) / len(truth)
+
+def evalPrint(pred, truth, message: str):
+    auc, eer = get_metrics(pred, truth)
+    acc = ACC(pred, truth)
+    print(message, 'auc = {}, eer = {}, acc = {}'.format(auc,eer,acc))
+    
 
 if __name__ == "__main__":
     # 第一个参数为模型预测输出（可以是概率，也可以是二值分类结果）

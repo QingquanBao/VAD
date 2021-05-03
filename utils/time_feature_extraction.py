@@ -29,15 +29,16 @@ if __name__ == "__main__":
     print(rosaZCR.shape)
     print(rosaZCR)
     '''
-    from utils.preprocess import getFrameSample
+    #from utils.preprocess import getFrameSample
     testdata = np.array( [[1, 2 ,3],
                           [2, 3, -1],
                           [3,-1, 2],
                           [-1, 2,-1],
-                          [2, -1, 2]])
+                          [2, -1, 2]]).T
     print(testdata.shape)
     
     myzcr = ZCR(testdata)
     print(myzcr)
     rosaZCR =librosa.zero_crossings(testdata.T).T.sum(axis=0) 
     print(rosaZCR)
+    print(energy(testdata))

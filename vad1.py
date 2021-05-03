@@ -1,9 +1,11 @@
 import numpy as np
 import time
 from utils.preprocess import makeTrainData
-from utils.evaluate import get_metrics
+from utils.evaluate import evalPrint
 from state_machine import stateMachine
 from utils.smoothing import averageSmooth
+
+
 
 if __name__ =='__main__':
     
@@ -22,13 +24,14 @@ if __name__ =='__main__':
     upperTh = [95, 2425]
     testY = stateMachine(trainX, lowerTh, upperTh)
 
-    auc, eer = get_metrics(testY, trainY)
-    print('Before postps, auc = {}, eer = {}'.format(auc,eer))
+    eval(testY, trainY, 'before smooth')
 
     # postprocess
-    for windowLen in [34,40,48]:
+    for windowLen in [40]:
         newY = averageSmooth(testY, windowLen)
-        auc, eer = get_metrics(newY, trainY)
-        print('With {} len postps, auc = {}, eer = {}'.format(windowLen, auc,eer))
+        eval(newY, trainY, 'after smooth')
 
+    for th in [0.2, 0.25, 0.3, 0.35, 0.4]:
+        newnewY = newY > th
+        eval(newnewY, trainY, 'with th={}'.format(th))
      

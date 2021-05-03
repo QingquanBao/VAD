@@ -16,7 +16,7 @@ def enframe(path, frame_size: float=0.032, frame_shift: float=0.008):
         frame_shift: the intervals of each frame in terms of seconds
 
     Return:
-        frameData: sequence
+        frameData: sequence with shape(frameLen=512, frameNum)
 
     '''
     sample_rate, wavData = wavfile.read(path)
@@ -83,6 +83,10 @@ def makeDataset(dataPath, labelPath,
 
 
 def aggregateFeature(frameData):
+    '''
+    Return: 
+        features: np.array with shape (2, frameNum)
+    '''
     zcr = tfe.ZCR(frameData)
     ener = tfe.energy(frameData)
     features = np.stack((zcr,ener))
@@ -109,7 +113,7 @@ def makeTrainData( trainPath, labelPath, frame_size: float=0.032, frame_shift: f
     np.save("tmpData/trainY.npy", trainY)
     return trainX[:,1:], trainY 
 
-             
+        
 ###################
 ###minimal test####
 ###################

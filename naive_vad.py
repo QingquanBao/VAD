@@ -5,13 +5,13 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import LogisticRegression as LogiReg
 from sklearn.linear_model import LinearRegression 
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
-from utils.evaluate import get_metrics
+from utils.evaluate import evalPrint
 import utils.preprocess as pps
 import utils.time_feature_extraction as tfe
 from state_machine import stateMachine
 from utils.smoothing import averageSmooth
 
-
+    
 if __name__ == "__main__":
     print('LDA + Smooth + LR :')
     lda = LDA()
@@ -20,22 +20,30 @@ if __name__ == "__main__":
     trainXX, trainY = pps.makeTrainData(trainPath='data/dev', labelPath='data/dev_label.txt', frame_size=0.032, frame_shift=0.008)
     trainXX = trainXX[:,1:]
     trainX = np.copy(trainXX.T)
-    for winLen in [24,28,32,36,40,60]:
+
+    '''
+    ### all 1
+    evalPrint(np.ones_like(trainY), trainY, 'all 1 ')
+    evalPrint(np.zeros_like(trainY),trainY, 'all 0 ')
+
+    ### without smooth LR
+    naiveY = classifier.fit(trainX, trainY)
+    naivetestY = classifier.predict(trainX) 
+    evalPrint(naivetestY, trainY, 'Without smooth LR')
+    '''
+
+    for winLen in [20]:
         for i in [0,1]:
             trainX[:,i] = averageSmooth(trainXX[i,:], winLen)
      
-        trainX_lda = lda.fit_transform(trainX, trainY)
-        #classifier.fit(trainX_lda, trainY)
+        #trainX_lda = lda.fit_transform(trainX, trainY)
+        classifier.fit(trainX, trainY)
         #print("training completed with {:.2f}s,\n the coeffs are ".format(endTime-startTime), classifier.coef_)
 
         # test with the training data
-        testY = lda.predict(trainX)
-        #testY = classifier.predict(trainX_lda)
-        #print('with less {}: '.format(0.7), (testY<0.7).sum())
-        #print('with more 0.85: ', (testY>=0.85).sum())
-        auc, eer = get_metrics(testY, trainY) 
-        print('with windowlen = {}'.format(winLen),"auc: {}".format(auc), "eer: {}".format(eer))
-
+        #testY = lda.predict(trainX)
+        testY = classifier.predict(trainX)
+        evalPrint(testY, trainY,'with windowlen = {}'.format(winLen))
 
     '''
     # add some postprocess
