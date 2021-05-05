@@ -17,7 +17,7 @@ def enframe(path, frame_size: float=0.032, frame_shift: float=0.008):
 
     Return:
         frameData: sequence with shape(frameLen=512, frameNum)
-
+        sample_rate
     '''
     sample_rate, wavData = wavfile.read(path)
     coeff = 0.97#预加重系数
@@ -35,7 +35,7 @@ def enframe(path, frame_size: float=0.032, frame_shift: float=0.008):
         singleFrame = np.append(singleFrame[0], singleFrame[:-1] - coeff*singleFrame[1:])#预加重
         frameData[:len(singleFrame),i] = singleFrame
         frameData[:,i] = hamwin * frameData[:,i]#加窗
-    return frameData
+    return frameData, sample_rate
 
 def readDataset(dirPath, frame_size: float=0.032, frame_shift: float=0.008):
     '''Read whole data in certain dir
@@ -56,7 +56,7 @@ def readDataset(dirPath, frame_size: float=0.032, frame_shift: float=0.008):
         wavID = filePath.split('.')[0]
         if wavID in dataset:
             raise RuntimeError(f"{filePath} is duplicated")
-        dataset[wavID] = enframe(dirPath + '/' + filePath, frame_size, frame_shift)
+        dataset[wavID], _ = enframe(dirPath + '/' + filePath, frame_size, frame_shift)
     return dataset
 
 def makeDataset(dataPath, labelPath, 
@@ -74,9 +74,9 @@ def makeDataset(dataPath, labelPath,
     labelist = []
     for waveID in wavedata.keys():
         datalist.append(wavedata[waveID])
-        frameLen = datalist[-1].shape[1]
+        frameNum = datalist[-1].shape[1]
         label = wavelabel[waveID]
-        labelPad = np.pad(label, (0, np.maximum(frameLen - len(label), 0)))[:frameLen]
+        labelPad = np.pad(label, (0, np.maximum(frameNum - len(label), 0)))[:frameNum]
         labelist.append(labelPad)
         #if len(labelist) == 2 : print(waveID)
     return datalist, labelist 
@@ -137,7 +137,7 @@ def testfeatures():
 
     
 if __name__ == "__main__":
-    #frameData = getFrameSample()
+    #frameData, _ = getFrameSample()
     #print( frameData.shape, '\n', frameData)
 
     #print( dataset['54-121080-0009'] )
