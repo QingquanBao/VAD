@@ -2,6 +2,10 @@
 This is a project in AI2615 in SJTU implemented by Qingquan Bao.
 The code is still be continued.
 
+## Requirements
+All available in `requirements.txt`
+To install them, you can run `pip install -r requirements.txt`.
+
 ## Temporal feature + naive classifier
 In `naiveVAD.py` and `state_machine.py`, we implement Logisitic Resgression and State Machine classifier to detect voice activity in develop dataset.
 

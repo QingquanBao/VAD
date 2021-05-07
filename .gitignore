@@ -3,3 +3,5 @@ data/
 tmpData/
 __pycache__/
 gridsearch/
+fig/
+.DS_Store
