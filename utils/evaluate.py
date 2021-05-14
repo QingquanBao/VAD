@@ -1,5 +1,6 @@
 from sklearn import metrics
 import numpy as np
+import os
 
 
 def compute_eer(target_scores, nontarget_scores):
@@ -69,7 +70,10 @@ def ACC(pred, truth):
 def evalPrint(pred, truth, message: str):
     auc, eer = get_metrics(pred, truth)
     acc = ACC(pred, truth)
-    print(message, 'auc = {}, eer = {}, acc = {}'.format(auc,eer,acc))
+    log = message + 'auc = {}, eer = {}, acc = {}'.format(auc,eer,acc) + '\n'
+    print(log)
+    with open('log.txt', 'a') as f:
+        f.write(log)
     
 
 if __name__ == "__main__":
