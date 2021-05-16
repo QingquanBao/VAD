@@ -32,14 +32,14 @@ for N_COMPONENTS in [2, 3]:
     
 
     winlen = 30 
-    y = averageSmooth(y, winlen)
+    trainy = averageSmooth(trainy, winlen)
     pred_test = averageSmooth(pred_test, winlen)
     evalPrint(trainy, label, 'TRAIN GMM with smoothed (winlen=30) spectral feat , NMFCC={}, N_COMPONENTS={} \t'.format(NMFCC, N_COMPONENTS), 'log.txt')
     evalPrint(trainy, testY, 'TEST GMM with smoothed (winlen=30) spectral feat , NMFCC={}, N_COMPONENTS={} \t'.format(NMFCC, N_COMPONENTS), 'log.txt')
 
 
     for th in [ 0.25, 0.35, 0.45]:
-        newy = y > th
+        newy = trainy > th
         new_testy = pred_test > th
         evalPrint(newy, label, 'TRAIN GMM with spectral feat and post Smooth winlen={}, NMFCC={}, N_COMPONENTS={}, and th={} \t'.format(winlen, NMFCC, N_COMPONENTS, th), 'log.txt')
         evalPrint(new_testy, testY, 'TEST GMM with spectral feat and post Smooth winlen={}, NMFCC={}, N_COMPONENTS={}, and th={} \t'.format(winlen, NMFCC, N_COMPONENTS, th), 'log.txt')
