@@ -64,3 +64,21 @@ TRAIN GMM without smoothed (winlen=30) spectral feat , NMFCC=20, N_COMPONENTS=2 
 Next is trained in SERVER
 TRAIN GMM without smoothed (winlen=30) spectral feat , NMFCC=20, N_COMPONENTS=2 	auc = 0.91849408115547, eer = 0.09698818455473604, acc = 0.9281735949030936
 TEST GMM without smoothed (winlen=30) spectral feat , NMFCC=20, N_COMPONENTS=2 	auc = 0.8995512664506539, eer = 0.14867639249530643, acc = 0.9299506699659393
+TRAIN GMM with smoothed (winlen=30) spectral feat , NMFCC=20, N_COMPONENTS=2 	auc = 0.9788109110039885, eer = 0.06849324874539128, acc = 0.5918631044330672
+TEST GMM with smoothed (winlen=30) spectral feat , NMFCC=20, N_COMPONENTS=2 	auc = 0.9737976115782122, eer = 0.08361452936773751, acc = 0.605404035928443
+TRAIN GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=2, and th=0.25 	auc = 0.8732685879579212, eer = 0.2510722626371634, acc = 0.9510028332566668
+TEST GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=2, and th=0.25 	auc = 0.8316580193792806, eer = 0.33559544566958105, acc = 0.9370740995735031
+TRAIN GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=2, and th=0.35 	auc = 0.9120131367999241, eer = 0.16814881297058104, acc = 0.9621281841909246
+TEST GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=2, and th=0.35 	auc = 0.8747078010211934, eer = 0.24609357033245943, acc = 0.9508471995946348
+TRAIN GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=2, and th=0.45 	auc = 0.932146687257528, eer = 0.11435043297761177, acc = 0.9612155743279466
+TEST GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=2, and th=0.45 	auc = 0.9045374864165387, eer = 0.17637367921490904, acc = 0.9555359386680664
+TRAIN GMM without smoothed (winlen=30) spectral feat , NMFCC=20, N_COMPONENTS=3 	auc = 0.8736144859280048, eer = 0.18933694323745637, acc = 0.9129700333821841
+TEST GMM without smoothed (winlen=30) spectral feat , NMFCC=20, N_COMPONENTS=3 	auc = 0.911631478413191, eer = 0.11457605952017573, acc = 0.9281522028098351
+TRAIN GMM with smoothed (winlen=30) spectral feat , NMFCC=20, N_COMPONENTS=3 	auc = 0.9639267368423527, eer = 0.097104073466218, acc = 0.5488344533569108
+TEST GMM with smoothed (winlen=30) spectral feat , NMFCC=20, N_COMPONENTS=3 	auc = 0.9788455469629056, eer = 0.07005161184215111, acc = 0.5820035128619373
+TRAIN GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=3, and th=0.25 	auc = 0.8086874718107878, eer = 0.3805451344746682, acc = 0.9269897960627448
+TEST GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=3, and th=0.25 	auc = 0.8554315844873419, eer = 0.28747642761867725, acc = 0.9455040593323745
+TRAIN GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=3, and th=0.35 	auc = 0.8538727519585549, eer = 0.2860676183745255, acc = 0.9413591960103621
+TEST GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=3, and th=0.35 	auc = 0.8973482741841071, eer = 0.19912999967942954, acc = 0.9581580878760818
+TRAIN GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=3, and th=0.45 	auc = 0.8852957996412298, eer = 0.21290882522114177, acc = 0.9466905354889686
+TEST GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=3, and th=0.45 	auc = 0.9225788627539677, eer = 0.1364166635306514, acc = 0.9597645519056026

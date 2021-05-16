@@ -7,9 +7,25 @@ All available in `requirements.txt`
 To install them, you can run `pip install -r requirements.txt`.
 
 ## Temporal feature + naive classifier
-In `naiveVAD.py` and `state_machine.py`, we implement Logisitic Resgression and State Machine classifier to detect voice activity in develop dataset.
+In `utils/time_feature_extraction.py`, we implement two kinds of temporal feature ZCR (Zero Crossing Rate) and energy.
+In `naiveVAD.py` and `model/state_machine.py`, we implement **Logisitic Resgression** and **State Machine classifier** to detect voice activity in develop dataset.
 
-To predict labels in new data, run `python vad4test.py`
+To predict labels in new data, run 
+`python vad4test.py`
 
 ## Spectral feature + GMM
-To be implemented... 
+Spectral data is extracted in `utils/spectralFeature.py` where we implement FBank and MFCC.
+In `gmm.py`, we implement **MFCC+GMM** 
+
+To predict labels in new data with **MFCC+GMM**, run
+`python gmm.py`
+
+## Result
+| model | auc | eer | acc(train) | acc(test) |
+| ------| -----| ----|---- | -----|
+| all 1                         | 0.5| 0.9999| 0.815|
+| TimeFeat + LR                 |0.8575 | 0.2127| 0.902 |
+| TimeFeat + preSmooth + LR     | 0.9291 | 0.1060| 0.9512|
+| TimeFeat + StateMachine + postSmooth| 0.9453| 0.0943| 0.9316|
+| MFCC + GMM                    | 0.9185 | 0.0970 | 0.9282 | 0.9300
+| MFCC + GMM + Smooth           | 0.9788 | 0.0700 | 0.9467| 0.9597
