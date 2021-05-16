@@ -1,0 +1,62 @@
+GMM with spectral feat NMFCC=20, N_COMPONENTS=1auc = 0.9082809729215165, eer = 0.11536912293319172, acc = 0.9231896604612165
+GMM with spectral feat NMFCC=20, N_COMPONENTS=2auc = 0.9234926732993018, eer = 0.08952138832092169, acc = 0.9316980120291662
+GMM with spectral feat NMFCC=20, N_COMPONENTS=3auc = 0.9201429327047516, eer = 0.09400658702581707, acc = 0.9290645016894002
+GMM with spectral feat NMFCC=20, N_COMPONENTS=4auc = 0.9191012897007808, eer = 0.0868230214182873, acc = 0.9228386014901261
+GMM (of sklearn) with spectral feat NMFCC=20, N_COMPONENTS=2 auc = 0.5908304874960921, eer = 0.8156204222888451, acc = 0.8470019109423604
+GMM with spectral feat and post Smooth, NMFCC=20, N_COMPONENTS=1auc = 0.9782769769414565, eer = 0.07534938694386253, acc = 0.4702656459825902
+GMM with spectral feat and post Smooth, NMFCC=20, N_COMPONENTS=2auc = 0.9822894499215229, eer = 0.06440957195482465, acc = 0.5016360029720721
+GMM with spectral feat and post Smooth, NMFCC=20, N_COMPONENTS=3auc = 0.9828472071339763, eer = 0.06361232718813722, acc = 0.47519069659643215
+
+
+GMM with spectral feat and post Smooth winlen=40, NMFCC=20, N_COMPONENTS=2, and th=0.4 	auc = 0.9202587495821235, eer = 0.1494569118473081, acc = 0.9642010738541731
+GMM with spectral feat and post Smooth winlen=40, NMFCC=20, N_COMPONENTS=2, and th=0.45 	auc = 0.9316427772847968, eer = 0.11816505475482633, acc = 0.9630376939629218
+GMM with spectral feat and post Smooth winlen=40, NMFCC=20, N_COMPONENTS=2, and th=0.5 	auc = 0.9368524316356236, eer = 0.09591189051543547, acc = 0.9575059589136031
+GMM with spectral feat and post Smooth winlen=40, NMFCC=20, N_COMPONENTS=2, and th=0.55 	auc = 0.9377096331384669, eer = 0.07964503094898609, acc = 0.9486510928272631
+GMM with spectral feat and post Smooth winlen=40, NMFCC=20, N_COMPONENTS=2, and th=0.6 	auc = 0.9375859936224625, eer = 0.07160150026969732, acc = 0.9433795276950309
+GMM with spectral feat and post Smooth winlen=40, NMFCC=20, N_COMPONENTS=2, and th=0.7 	auc = 0.9280895169969269, eer = 0.09537667724549145, acc = 0.9132997952724059
+GMM with spectral feat and post Smooth winlen=40, NMFCC=20, N_COMPONENTS=3, and th=0.4 	auc = 0.9190135786620671, eer = 0.15143608591845525, acc = 0.9634182918765636
+GMM with spectral feat and post Smooth winlen=40, NMFCC=20, N_COMPONENTS=3, and th=0.45 	auc = 0.9306769993328267, eer = 0.11979996404035842, acc = 0.9624934957520729
+GMM with spectral feat and post Smooth winlen=40, NMFCC=20, N_COMPONENTS=3, and th=0.5 	auc = 0.936742133223634, eer = 0.09582547587289242, acc = 0.9572719195995428
+GMM with spectral feat and post Smooth winlen=40, NMFCC=20, N_COMPONENTS=3, and th=0.55 	auc = 0.938593432026368, eer = 0.07790001268343948, acc = 0.9489919267797781
+GMM with spectral feat and post Smooth winlen=40, NMFCC=20, N_COMPONENTS=3, and th=0.6 	auc = 0.938573471929659, eer = 0.06973940410135043, acc = 0.9438157951542501
+GMM with spectral feat and post Smooth winlen=40, NMFCC=20, N_COMPONENTS=3, and th=0.7 	auc = 0.9301092940722836, eer = 0.09473553634920436, acc = 0.9144506779187316
+GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=2, and th=0.35 	auc = 0.9147368521326018, eer = 0.16355504264283852, acc = 0.9640840541971429
+GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=2, and th=0.4 	auc = 0.9316075550403332, eer = 0.12215267237282064, acc = 0.96549397064738
+GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=2, and th=0.45 	auc = 0.9370817635940113, eer = 0.10579382302559964, acc = 0.964107912573819
+GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=2, and th=0.5 	auc = 0.9411708131822896, eer = 0.08381244677485222, acc = 0.9569197245152773
+GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=3, and th=0.35 	auc = 0.9121049724099046, eer = 0.1682493090313058, acc = 0.9627525295559842
+GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=3, and th=0.4 	auc = 0.9298623574799404, eer = 0.12501132449952682, acc = 0.964449882639509
+GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=3, and th=0.45 	auc = 0.9355989803515181, eer = 0.10828312224466215, acc = 0.9632592360320565
+GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=3, and th=0.5 	auc = 0.9412921053298259, eer = 0.08364658641255186, acc = 0.9570128857956314
+GMM with spectral feat and post Smooth winlen=20, NMFCC=20, N_COMPONENTS=2, and th=0.35 	auc = 0.924541572804456, eer = 0.1396558188414584, acc = 0.9650054419821085
+GMM with spectral feat and post Smooth winlen=20, NMFCC=20, N_COMPONENTS=2, and th=0.4 	auc = 0.9379579174421807, eer = 0.1012096656171469, acc = 0.9626468710307046
+GMM with spectral feat and post Smooth winlen=20, NMFCC=20, N_COMPONENTS=2, and th=0.45 	auc = 0.9405854867266261, eer = 0.08818056757694737, acc = 0.9587193277845566
+GMM with spectral feat and post Smooth winlen=20, NMFCC=20, N_COMPONENTS=3, and th=0.35 	auc = 0.9216396119594933, eer = 0.14485463523961248, acc = 0.9635512171180445
+GMM with spectral feat and post Smooth winlen=20, NMFCC=20, N_COMPONENTS=3, and th=0.4 	auc = 0.9363653063997308, eer = 0.10423278432159627, acc = 0.9619561142202742
+GMM with spectral feat and post Smooth winlen=20, NMFCC=20, N_COMPONENTS=3, and th=0.45 	auc = 0.9397675755661623, eer = 0.08996321802553692, acc = 0.9585091468471724
+GMM with spectral feat and post Smooth winlen=20, NMFCC=20, N_COMPONENTS=2, and th=0.1 	auc = 0.854479836129026, eer = 0.28956013553161036, acc = 0.9452654755656139
+GMM with spectral feat and post Smooth winlen=20, NMFCC=20, N_COMPONENTS=2, and th=0.2 	auc = 0.8966666907817272, eer = 0.20223953302642197, acc = 0.9590067644178443
+GMM with spectral feat and post Smooth winlen=20, NMFCC=20, N_COMPONENTS=2, and th=0.35 	auc = 0.924541572804456, eer = 0.1396558188414584, acc = 0.9650054419821085
+GMM with spectral feat and post Smooth winlen=20, NMFCC=20, N_COMPONENTS=3, and th=0.1 	auc = 0.8486115391995586, eer = 0.3010156508067922, acc = 0.9429182657459606
+GMM with spectral feat and post Smooth winlen=20, NMFCC=20, N_COMPONENTS=3, and th=0.2 	auc = 0.8925302287881167, eer = 0.21014926038822476, acc = 0.9572480612228668
+GMM with spectral feat and post Smooth winlen=20, NMFCC=20, N_COMPONENTS=3, and th=0.35 	auc = 0.9216396119594933, eer = 0.14485463523961248, acc = 0.9635512171180445
+GMM with spectral feat and post Smooth winlen=50, NMFCC=20, N_COMPONENTS=2, and th=0.25 	auc = 0.8066699436435154, eer = 0.38609922909776145, acc = 0.9281669722811108
+GMM with spectral feat and post Smooth winlen=50, NMFCC=20, N_COMPONENTS=2, and th=0.35 	auc = 0.8718388604538583, eer = 0.25385555653120473, acc = 0.9510619249847193
+GMM with spectral feat and post Smooth winlen=50, NMFCC=20, N_COMPONENTS=2, and th=0.45 	auc = 0.9208743943144603, eer = 0.1446149042957834, acc = 0.9621526617995578
+GMM with spectral feat and post Smooth winlen=50, NMFCC=20, N_COMPONENTS=3, and th=0.25 	auc = 0.8033152461599657, eer = 0.39267371085381847, acc = 0.9268422643190024
+GMM with spectral feat and post Smooth winlen=50, NMFCC=20, N_COMPONENTS=3, and th=0.35 	auc = 0.8692682753499126, eer = 0.2585818799644864, acc = 0.9498496922269409
+GMM with spectral feat and post Smooth winlen=50, NMFCC=20, N_COMPONENTS=3, and th=0.45 	auc = 0.9196856407565068, eer = 0.14648954452514457, acc = 0.9613960104249745
+GMM with spectral feat, NMFCC=20, N_COMPONENTS=4 	auc = 0.9191012897007808, eer = 0.0868230214182873, acc = 0.9228386014901261
+GMM with spectral feat and post Smooth winlen=40, NMFCC=20, N_COMPONENTS=4, and th=0.25 	auc = 0.8546446894851316, eer = 0.28865138800035123, acc = 0.9449609972347005
+GMM with spectral feat and post Smooth winlen=40, NMFCC=20, N_COMPONENTS=4, and th=0.35 	auc = 0.8974904342731268, eer = 0.19994118229168845, acc = 0.9589011058925646
+GMM with spectral feat and post Smooth winlen=40, NMFCC=20, N_COMPONENTS=4, and th=0.45 	auc = 0.9368956443916296, eer = 0.10382719301546682, acc = 0.962565070882101
+GMM with spectral feat, NMFCC=20, N_COMPONENTS=2 	auc = 0.9234926732993018, eer = 0.08952138832092169, acc = 0.9316980120291662
+GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=2, and th=0.25 	auc = 0.8744916479342142, eer = 0.24902469925613718, acc = 0.9523423245330007
+GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=2, and th=0.35 	auc = 0.9147368521326018, eer = 0.16355504264283852, acc = 0.9640840541971429
+GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=2, and th=0.45 	auc = 0.9370817635940113, eer = 0.10579382302559964, acc = 0.964107912573819
+GMM with spectral feat, NMFCC=20, N_COMPONENTS=3 	auc = 0.9201429327047516, eer = 0.09400658702581707, acc = 0.9290645016894002
+GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=3, and th=0.25 	auc = 0.8714314885848091, eer = 0.25476430406246386, acc = 0.9509710359307153
+GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=3, and th=0.35 	auc = 0.9121049724099046, eer = 0.1682493090313058, acc = 0.9627525295559842
+GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=3, and th=0.45 	auc = 0.9355989803515181, eer = 0.10828312224466215, acc = 0.9632592360320565
+GMM with smoothed (winlen=20) spectral feat , NMFCC=20, N_COMPONENTS=2 	auc = 0.9239940338778753, eer = 0.08816244837770447, acc = 0.9316593841812146
+GMM with smoothed (winlen=20) spectral feat , NMFCC=20, N_COMPONENTS=3 	auc = 0.9315511134853105, eer = 0.07193461477885517, acc = 0.9293542105490381

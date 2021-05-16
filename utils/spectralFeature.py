@@ -1,3 +1,4 @@
+from tqdm import tqdm
 import os
 import numpy as np
 import librosa
@@ -32,13 +33,13 @@ def spectralData(waveDirPath: str, frame_size: float=0.032, frame_shift: float=0
 
     tmpsavePath = 'tmpData'
     if (featType == 'mfcc'):
-        if os.path.exists(tmpsavePath + '/' + featType +'_' + str(NMELS) +'_specX.npy'):
-            trainX = np.load(tmpsavePath + '/' + featType + '_' + str(NMELS) +'_specX.npy')
+        if os.path.exists(tmpsavePath + '/' + featType +'_' + str(NMFCC) +'_specX.npy'):
+            trainX = np.load(tmpsavePath + '/' + featType + '_' + str(NMFCC) +'_specX.npy')
             trainY = np.load(tmpsavePath + '/' + 'specY.npy')
             return trainX, trainY
     else:
-        if os.path.exists(tmpsavePath + '/' + featType +'_' + str(NMFCC)+ '_specX.npy'):
-            trainX = np.load(tmpsavePath + '/' + featType + '_' + str(NMFCC) +'_specX.npy')
+        if os.path.exists(tmpsavePath + '/' + featType +'_' + str(NMELS)+ '_specX.npy'):
+            trainX = np.load(tmpsavePath + '/' + featType + '_' + str(NMELS) +'_specX.npy')
             trainY = np.load(tmpsavePath + '/' + 'specY.npy')
             return trainX, trainY
 
@@ -49,11 +50,17 @@ def spectralData(waveDirPath: str, frame_size: float=0.032, frame_shift: float=0
         wavelabel = read_label_from_file(labelDirPath, frame_size, frame_shift)
         labelist = []
          
-    for fileName in wavfiles:
+    for b, fileName in enumerate(tqdm(wavfiles)):
         waveID = fileName.split('.')[0]
         frameData, sampleRate = pps.enframe(waveDirPath + '/' + fileName, frame_size, frame_shift)
         spectralData = getmelFeature(frameData, sampleRate, frame_size, frame_shift, NFFT, NMELS)
         specData = np.concatenate((specData, spectralData), axis=0)
+
+        if( b % 600 == 599):
+            c = int(b / 600)
+            np.save("tmpData/{}_mel_".format(c) + str(NMELS) + "_specX.npy", specData[1:])
+            specData = np.zeros((1, NMELS ))
+            
         
         if labelDirPath != None:
             frameNum = frameData.shape[1]
@@ -63,7 +70,12 @@ def spectralData(waveDirPath: str, frame_size: float=0.032, frame_shift: float=0
     
     label = np.concatenate(labelist)
     np.save("tmpData/specY.npy", label)
-    np.save("tmpData/mel_" + str(NMELS) + "_specX.npy", specData[1:])
+    specData = np.zeros((1, NMELS ))
+    for c in [0,1,2,3,4,5]:
+        arr = np.load("tmpdata/{}_mel_".format(c) + str(nmels) + "_specx.npy", specData[1:])
+        specData = np.concatenate((specdata, arr), axis=0)
+        
+    np.save("tmpdata/mel_" + str(nmels) + "_specx.npy", specdata[1:])
     if (featType == 'mel'):
         return specData[1:], label 
     else:
