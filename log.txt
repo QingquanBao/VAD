@@ -60,3 +60,5 @@ GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=3, and 
 GMM with spectral feat and post Smooth winlen=30, NMFCC=20, N_COMPONENTS=3, and th=0.45 	auc = 0.9355989803515181, eer = 0.10828312224466215, acc = 0.9632592360320565
 GMM with smoothed (winlen=20) spectral feat , NMFCC=20, N_COMPONENTS=2 	auc = 0.9239940338778753, eer = 0.08816244837770447, acc = 0.9316593841812146
 GMM with smoothed (winlen=20) spectral feat , NMFCC=20, N_COMPONENTS=3 	auc = 0.9315511134853105, eer = 0.07193461477885517, acc = 0.9293542105490381
+TRAIN GMM without smoothed (winlen=30) spectral feat , NMFCC=20, N_COMPONENTS=2 	auc = 0.91849408115547, eer = 0.09698818455473604, acc = 0.9281735949030936
+Next is trained in SERVER

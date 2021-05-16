@@ -67,13 +67,14 @@ def get_metrics(prediction, label):
 def ACC(pred, truth):
     return np.sum(pred == truth) / len(truth)
 
-def evalPrint(pred, truth, message: str):
+def evalPrint(pred, truth, message: str, logfile=None):
     auc, eer = get_metrics(pred, truth)
     acc = ACC(pred, truth)
     log = message + 'auc = {}, eer = {}, acc = {}'.format(auc,eer,acc) + '\n'
     print(log)
-    with open('log.txt', 'a') as f:
-        f.write(log)
+    if (logfile != None):
+        with open(logfile, 'a') as f:
+            f.write(log)
     
 
 if __name__ == "__main__":
