@@ -5,3 +5,4 @@ __pycache__/
 gridsearch/
 fig/
 .DS_Store
+wav/

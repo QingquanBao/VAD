@@ -1,11 +1,15 @@
 import numpy as np
 import time
+from tqdm import tqdm
 from utils.preprocess import makeTrainData, readDataset, aggregateFeature
 from utils.evaluate import get_metrics
-from state_machine import stateMachine
+from model.state_machine import stateMachine
 from utils.smoothing import averageSmooth
 from utils.vad_utils import prediction_to_vad_label
 from sklearn.linear_model import LogisticRegression as LogiReg
+from sklearn.mixture import GaussianMixture as GMM
+from model.GMM_Classifier import GMMClassifier as myGMM
+from utils.spectralFeature import getMFCC, spectralData
 
 def readTestset(testPath, frame_size: float=0.032, frame_shift: float=0.008):
     '''
@@ -39,25 +43,60 @@ def predict(classifier, winLen, data):
     label = classifier.predict(predata)   
     return label
 
+def trainGMM(model):
+    NMFCC = 20
+    RANDOM_SEED = 1337
+
+    specdata, label = spectralData('/Volumes/T7/vad/wavs/train', labelDirPath='/Volumes/T7/vad/data/train_label.txt', NMFCC=NMFCC)
+    model.fit(specdata.T, label)
+    trainy = model.predict(specdata.T)
+    evalPrint(trainy, label, 'TRAIN GMM without smoothed (winlen=30) spectral feat , NMFCC={}, N_COMPONENTS={} \t'.format(NMFCC, N_COMPONENTS), 'log.txt')
+
+def predictGMM(model, x, winlen=30, th=0.35):
+    y = model.predict(x)
+    newy = averageSmooth(y, winlen)
+    finaly = newy > th 
+    return finaly
+
 if __name__ =='__main__':
-    testPath = '/Volumes/T7/vad/wavs/train'    
-    labelOutPath = 'train_label_task1_SM.txt'
+    testPath = 'wav/test'    
+    labelOutPath = 'train_label_task2_GMM.txt'
+    # para of State Machine
     lowerTh = [326, 557]
     upperTh = [95, 2425]
+    # para of LR
     windowLen = 40
-    classifier = LogiReg()
-
-    trainSmoothLR(classifier, winLen=20) 
-
+    # para of GMM
+    N_COMPONENTS = 3
+    RANDOM_SEED = 1337
+    
+    model = 'GMM'
+    featType = 'MFCC'
     testset = readTestset(testPath=testPath)
-    for index, sound in testset.items():
-        feat = aggregateFeature(sound)
-        ''' state machine '''
-        prediction = stateMachine(feat, lowerTh, upperTh)
-        prediction = averageSmooth(prediction, windowLen)
-        ''' LR
-        prediction = predict(classifier, winLen=20, data=feat)
-        '''
+
+    if ( model == 'LR'):
+        classifier = LogiReg()
+        trainSmoothLR(classifier, winLen=20) 
+    elif (model == 'GMM'):
+        classifier = myGMM( [GMM(n_components=N_COMPONENTS, covariance_type='full', random_state=RANDOM_SEED),
+                    GMM(n_components=N_COMPONENTS, covariance_type='full', random_state=RANDOM_SEED)])
+        trainGMM(classifier)
+
+    for index, sound in tqdm(testset.items()):
+        if (featType == 'Time'):
+            feat = aggregateFeature(sound)
+        elif (featType == 'MFCC'):
+            feat = getMFCC(sound).T
+            
+
+        if (model =='StateMachine'):   
+            prediction = stateMachine(feat, lowerTh, upperTh)
+            prediction = averageSmooth(prediction, windowLen)
+        elif (model =='LR'):
+            prediction = predict(classifier, winLen=20, data=feat)
+        elif (model =='GMM'):
+            prediction = predictGMM(gmm, x=feat, winlen=30, th=0.35)
+
         label = prediction_to_vad_label(prediction, threshold = 0.4) 
         with open(labelOutPath, 'a') as f:
             label = index + ' ' + label + '\n'

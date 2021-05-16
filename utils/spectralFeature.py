@@ -8,6 +8,11 @@ from .vad_utils import read_label_from_file, prediction_to_vad_label
 def getmelFeature(frameData, sampleRate,
                    frame_size: float=0.032, frame_shift: float=0.008,
                    NFFT=512, NMELS=40):
+    '''
+    Input:
+        frameData(shape=(frameSize, frameNum))
+    Return: melData(shape=(frameNum, NMELS))
+    '''
     fftData = np.fft.rfft(frameData.T)
     periodogram = np.abs(fftData) ** 2 / NFFT
     melFBank = librosa.filters.mel(sr=sampleRate, n_fft=NFFT, n_mels=NMELS)
@@ -15,6 +20,9 @@ def getmelFeature(frameData, sampleRate,
     return melData
 
 def getMFCC(melData, n_mfcc=40):
+    '''
+    return: mfcc(np.ndarray[shape=(n_mfcc, frameNum)])
+    '''
     mfcc = librosa.feature.mfcc(S=librosa.power_to_db(melData), n_mfcc=n_mfcc)
     return mfcc
 
@@ -56,10 +64,12 @@ def spectralData(waveDirPath: str, frame_size: float=0.032, frame_shift: float=0
         spectralData = getmelFeature(frameData, sampleRate, frame_size, frame_shift, NFFT, NMELS)
         specData = np.concatenate((specData, spectralData), axis=0)
 
+        '''
         if( b % 600 == 599):
             c = int(b / 600)
             np.save("tmpData/{}_mel_".format(c) + str(NMELS) + "_specX.npy", specData[1:])
             specData = np.zeros((1, NMELS ))
+        '''
             
         
         if labelDirPath != None:
@@ -70,12 +80,14 @@ def spectralData(waveDirPath: str, frame_size: float=0.032, frame_shift: float=0
     
     label = np.concatenate(labelist)
     np.save("tmpData/specY.npy", label)
+    '''
     specData = np.zeros((1, NMELS ))
-    for c in [0,1,2,3,4,5]:
+    for c in range(ceil(b/600)):
         arr = np.load("tmpdata/{}_mel_".format(c) + str(nmels) + "_specx.npy", specData[1:])
-        specData = np.concatenate((specdata, arr), axis=0)
+        specData = np.concatenate((specData, arr), axis=0)
         
-    np.save("tmpdata/mel_" + str(nmels) + "_specx.npy", specdata[1:])
+    np.save("tmpdata/mel_" + str(nmels) + "_specx.npy", specData)
+    '''
     if (featType == 'mel'):
         return specData[1:], label 
     else:
