@@ -67,7 +67,7 @@ def get_metrics(prediction, label):
 def ACC(pred, truth):
     return np.sum(pred == truth) / len(truth)
 
-def evalPrint(pred, truth, message: str, logfile=None):
+def evalPrint(pred, truth, message: str='', logfile=None):
     auc, eer = get_metrics(pred, truth)
     acc = ACC(pred, truth)
     log = message + 'auc = {}, eer = {}, acc = {}'.format(auc,eer,acc) + '\n'

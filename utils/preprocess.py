@@ -1,4 +1,5 @@
 import os
+from tqdm import tqdm
 import numpy as np
 import math
 from scipy.io import wavfile
@@ -52,7 +53,8 @@ def readDataset(dirPath, frame_size: float=0.032, frame_shift: float=0.008):
     '''
     files = os.listdir(dirPath)
     dataset = {}
-    for filePath in files:
+
+    for filePath in tqdm(files):
         wavID = filePath.split('.')[0]
         if wavID in dataset:
             raise RuntimeError(f"{filePath} is duplicated")

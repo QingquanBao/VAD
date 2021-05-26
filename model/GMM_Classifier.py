@@ -1,5 +1,6 @@
 from sklearn.mixture import GaussianMixture as GMM
 import numpy as np
+import joblib 
 
 class GMMClassifier():
     def __init__(self, model: list):
@@ -30,4 +31,14 @@ class GMMClassifier():
             result[:,i] = gmm.score_samples(X)
         
         return np.argmax(result, axis=1)
+    
+    def save(self, outPath:str, index:str):
+        for i, gmm in enumerate(self.model):
+            joblib.dump(gmm, outPath + '/' + index + 'gmm_{}.pkl'.format(i))
 
+    def load(self, savePath:str):
+        for i, gmm in enumerate(self.model):
+            self.model[i] = joblib.load(savePath + '{}.pkl'.format(i))
+        
+            
+        

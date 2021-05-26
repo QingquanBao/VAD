@@ -2,14 +2,14 @@ import numpy as np
 import time
 from tqdm import tqdm
 from utils.preprocess import makeTrainData, readDataset, aggregateFeature
-from utils.evaluate import get_metrics
+from utils.evaluate import get_metrics, evalPrint
 from model.state_machine import stateMachine
 from utils.smoothing import averageSmooth
-from utils.vad_utils import prediction_to_vad_label
+from utils.vad_utils import prediction_to_vad_label, read_label_from_file
 from sklearn.linear_model import LogisticRegression as LogiReg
 from sklearn.mixture import GaussianMixture as GMM
 from model.GMM_Classifier import GMMClassifier as myGMM
-from utils.spectralFeature import getMFCC, spectralData
+from utils.spectralFeature import getMFCC, spectralData, getmelFeature
 
 def readTestset(testPath, frame_size: float=0.032, frame_shift: float=0.008):
     '''
@@ -43,36 +43,42 @@ def predict(classifier, winLen, data):
     label = classifier.predict(predata)   
     return label
 
-def trainGMM(model):
+def trainGMM(model, useHistory=False, histPath=None):
     NMFCC = 20
-    RANDOM_SEED = 1337
+
 
     specdata, label = spectralData('/Volumes/T7/vad/wavs/train', labelDirPath='/Volumes/T7/vad/data/train_label.txt', NMFCC=NMFCC)
     model.fit(specdata.T, label)
     trainy = model.predict(specdata.T)
-    evalPrint(trainy, label, 'TRAIN GMM without smoothed (winlen=30) spectral feat , NMFCC={}, N_COMPONENTS={} \t'.format(NMFCC, N_COMPONENTS), 'log.txt')
+    evalPrint(trainy, label, 'TRAIN GMM without smoothed (winlen=30) spectral feat , NMFCC={}, N_COMPONENTS={} \t'.format(NMFCC, N_COMPONENTS))
 
-def predictGMM(model, x, winlen=30, th=0.35):
+def predictGMM(model, x, winlen=30):
     y = model.predict(x)
     newy = averageSmooth(y, winlen)
-    finaly = newy > th 
-    return finaly
+    return y
+
+def alignLabel(label, frames):
+    label_pad = np.pad(label, (0, np.maximum(frames - len(label), 0)))[:frames]
+    return label_pad
 
 if __name__ =='__main__':
-    testPath = 'wav/test'    
-    labelOutPath = 'train_label_task2_GMM.txt'
+    testPath = 'wav/dev'    
+    devlabeldirpath = 'wav/dev_label.txt'
+    labelOutPath = 'devin_label_task2_GMM_9.txt'
     # para of State Machine
     lowerTh = [326, 557]
     upperTh = [95, 2425]
     # para of LR
     windowLen = 40
     # para of GMM
-    N_COMPONENTS = 3
+    N_COMPONENTS = 2
     RANDOM_SEED = 1337
     
     model = 'GMM'
     featType = 'MFCC'
     testset = readTestset(testPath=testPath)
+    wavelabel = read_label_from_file(devlabeldirpath)
+
 
     if ( model == 'LR'):
         classifier = LogiReg()
@@ -85,8 +91,10 @@ if __name__ =='__main__':
     for index, sound in tqdm(testset.items()):
         if (featType == 'Time'):
             feat = aggregateFeature(sound)
-        elif (featType == 'MFCC'):
-            feat = getMFCC(sound).T
+        elif (featType == 'MFCC' or 'MEL'):
+            feat = getmelFeature(sound) 
+            if (featType == 'MFCC'):
+                feat = getMFCC(feat.T, n_mfcc=20).T
             
 
         if (model =='StateMachine'):   
@@ -95,11 +103,14 @@ if __name__ =='__main__':
         elif (model =='LR'):
             prediction = predict(classifier, winLen=20, data=feat)
         elif (model =='GMM'):
-            prediction = predictGMM(gmm, x=feat, winlen=30, th=0.35)
+            prediction = predictGMM(classifier, x=feat, winlen=40)
 
-        label = prediction_to_vad_label(prediction, threshold = 0.4) 
+        label = prediction_to_vad_label(prediction, threshold = 0.45) 
         with open(labelOutPath, 'a') as f:
-            label = index + ' ' + label + '\n'
+            thislabel = np.array(wavelabel[index])
+            thislabel = alignLabel(thislabel, len(prediction))
+            acc = ((prediction > 0.45 ) == thislabel).sum() / len(prediction)
+            label = index + ' ' + label + ' acc={}'.format(acc) + '\n'
             f.write(label)
 
 

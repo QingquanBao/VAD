@@ -5,7 +5,7 @@ import librosa
 from . import preprocess as pps
 from .vad_utils import read_label_from_file, prediction_to_vad_label
 
-def getmelFeature(frameData, sampleRate,
+def getmelFeature(frameData, sampleRate=16000,
                    frame_size: float=0.032, frame_shift: float=0.008,
                    NFFT=512, NMELS=40):
     '''
@@ -21,6 +21,8 @@ def getmelFeature(frameData, sampleRate,
 
 def getMFCC(melData, n_mfcc=40):
     '''
+    Input:
+                            shape=(NMELS, frameNum)
     return: mfcc(np.ndarray[shape=(n_mfcc, frameNum)])
     '''
     mfcc = librosa.feature.mfcc(S=librosa.power_to_db(melData), n_mfcc=n_mfcc)
