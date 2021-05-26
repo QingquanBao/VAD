@@ -28,4 +28,5 @@ To predict labels in new data with **MFCC+GMM**, run
 | TimeFeat + preSmooth + LR     | 0.9291 | 0.1060| **0.9512**|
 | TimeFeat + StateMachine + postSmooth| 0.9453| 0.0943| 0.9316|
 | MFCC + GMM                    | 0.9185 | 0.0970 | 0.9282 | 0.9300
-| MFCC + GMM + Smooth           | **0.9788** | **0.0700** | 0.9467| **0.9597**
+| MFCC + GMM + Smooth           | 0.9788 | 0.0700 | 0.9467| 0.9597
+| Mel + LSTM | **0.9902** | **0.0389** |  | **0.9675** |
