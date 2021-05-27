@@ -3,7 +3,6 @@ import torch
 import numpy as np
 from torch.utils.data import Dataset, DataLoader
 from tqdm import tqdm
-from utils.evaluate import evalPrint
 
 class RNN(torch.nn.Module):
     def __init__(self, input_size):
@@ -34,7 +33,9 @@ class SoundData(Dataset):
         return self.size
 
 if __name__ == '__main__':
-    epoch_NUM = 64
+    # If u want to use it, please put this file in the father dir
+    from utils.evaluate import evalPrint
+    epoch_NUM = 128
     os.environ["CUDA_VISIBLE_DEVICES"] = '3'
 
     melX = np.load('tmpData/mel_40_specX.npy')
@@ -50,8 +51,8 @@ if __name__ == '__main__':
     optimizer = torch.optim.Adam(rnn.parameters(), lr=0.009)
     loss_func = torch.nn.MSELoss()
 
-    for epoch in range(epoch_NUM):
-        for i, [feat, label] in enumerate(tqdm(dataloader)):
+    for epoch in tqdm(range(epoch_NUM)):
+        for i, [feat, label] in enumerate(dataloader):
             feat = feat.to(torch.float32).cuda()
             label = label.to(torch.float32).cuda()
             y_hat = rnn(feat).squeeze()
@@ -63,7 +64,9 @@ if __name__ == '__main__':
         if epoch % 16 == 15 :      
             testy = rnn(testx).squeeze().detach().cpu().numpy()
             evalPrint(testy, testY, 'lstm epoch{} '.format(epoch))
-        
+        if epoch % 32 == 31 :
+            torch.save(rnn.state_dict(), 'model/epoch{}.pt'.format(epoch))
+
     finaly = testy > 0.5
     evalPrint(finaly, testY, 'lstm final ')
 
