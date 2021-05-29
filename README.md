@@ -8,7 +8,7 @@ To install them, you can run `pip install -r requirements.txt`.
 
 ## Temporal feature + naive classifier
 In `utils/time_feature_extraction.py`, we implement two kinds of temporal feature ZCR (Zero Crossing Rate) and energy.
-In `naiveVAD.py` and `model/state_machine.py`, we implement **Logisitic Resgression** and **State Machine classifier** to detect voice activity in develop dataset.
+In `LRtest.py` and `model/state_machine.py`, we implement **Logisitic Resgression** and **State Machine classifier** to detect voice activity in develop dataset.
 
 To predict labels in new data, run 
 `python vad4test.py --model=LR --featType=Time`

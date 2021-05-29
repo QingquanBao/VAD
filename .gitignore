@@ -7,3 +7,5 @@ fig/
 .DS_Store
 wav/
 .txt
+tmp.py
+lstmtest.py
