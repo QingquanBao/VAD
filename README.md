@@ -8,10 +8,10 @@ To install them, you can run `pip install -r requirements.txt`.
 
 ## Temporal feature + naive classifier
 In `utils/time_feature_extraction.py`, we implement two kinds of temporal feature ZCR (Zero Crossing Rate) and energy.
-In `naiveVAD.py` and `model/state_machine.py`, we implement **Logisitic Resgression** and **State Machine classifier** to detect voice activity in develop dataset.
+In `LRtest.py` and `model/state_machine.py`, we implement **Logisitic Resgression** and **State Machine classifier** to detect voice activity in develop dataset.
 
 To predict labels in new data, run 
-`python vad4test.py --model=LR --featType=Time`
+`python vad4test.py --model=LR --featType=Time --testdirPath=<your test file directory path> --outPath=<the output .txt path u wish>` 
 
 ## Spectral feature + GMM
 Spectral data is extracted in `utils/spectralFeature.py` where we implement FBank and MFCC.
@@ -21,13 +21,13 @@ To predict labels in new data with **MFCC+GMM**, run
 `python gmm.py`
 
 To predict labels in new data, run 
-`python vad4test.py --model=GMM --featType=MFCC`
+`python vad4test.py --model=GMM --featType=MFCC --testdirPath=<your test file directory path> --outPath=<the output .txt path u wish>`
 
 ## Spectral feature + LSTM
 The model is implementde in `model/lstm.py` and now the architecture **only support MEL40 feature**.
 
 To predict labels in new data, run
-`python vad4test.py --model=LSTM --featType=MEL`
+`python vad4test.py --model=LSTM --featType=MEL --testdirPath=<your test file directory path> --outPath=<the output .txt path u wish>`
 
 ## Result
 | model | auc | eer | acc(train) | acc(test) |
